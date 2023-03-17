@@ -35,9 +35,13 @@ def main():
         if random_boolean() and random_boolean():
             query_one_and_cancel(headers)
         else:
-            query_order_and_pay(headers)
+            pairs = _query_orders(headers=headers, types=tuple([0, 1]))
+            pairs2 = _query_orders(headers=headers, types=tuple([0, 1]), query_other=True)
+            pairs = pairs + pairs2
+            query_order_and_pay(headers, pairs)
             query_and_collect_ticket(headers)
             query_and_enter_station(headers)
+
 
 
 def main_thread():

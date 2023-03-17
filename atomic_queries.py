@@ -4,7 +4,8 @@ import logging
 import time
 
 logger = logging.getLogger("atomic_queries")
-base_address = "http://139.196.152.44:31000"
+# base_address = "http://139.196.152.44:31000"
+base_address = "http://127.0.0.1"
 
 headers = {
     "Cookie": "JSESSIONID=CAF07ABCB2031807D1C6043730C69F17; YsbCaptcha=ABF26F4AE563405894B1540057F62E7B",
@@ -20,7 +21,7 @@ date = time.strftime("%Y-%m-%d", time.localtime())
 
 
 def _login(username="fdse_microservice", password="111111"):
-    url = f"{base_address}/api/v1/users/login"
+    url = f"{base_address}:12340/api/v1/users/login"
 
     cookies = {
         'JSESSIONID': '9ED5635A2A892A4BA31E7E98533A279D',
@@ -67,7 +68,7 @@ def _query_high_speed_ticket(place_pair: tuple = ("Shang Hai", "Su Zhou"), heade
     :return: TripId 列表
     """
 
-    url = f"{base_address}/api/v1/travelservice/trips/left"
+    url = f"{base_address}:12346/api/v1/travelservice/trips/left"
     place_pairs = [("Shang Hai", "Su Zhou"),
                    ("Su Zhou", "Shang Hai"),
                    ("Nan Jing", "Shang Hai")]
@@ -97,7 +98,7 @@ def _query_high_speed_ticket(place_pair: tuple = ("Shang Hai", "Su Zhou"), heade
 
 def _query_normal_ticket(place_pair: tuple = ("Nan Jing", "Shang Hai"), headers: dict = {},
                          time: str = "2021-07-15") -> List[str]:
-    url = f"{base_address}/api/v1/travel2service/trips/left"
+    url = f"{base_address}:16346/api/v1/travel2service/trips/left"
     place_pairs = [("Shang Hai", "Nan Jing"),
                    ("Nan Jing", "Shang Hai")]
 
@@ -191,7 +192,7 @@ def _query_advanced_ticket(place_pair: tuple = ("Nan Jing", "Shang Hai"), header
 
 
 def _query_assurances(headers: dict = {}):
-    url = f"{base_address}/api/v1/assuranceservice/assurances/types"
+    url = f"{base_address}:18888/api/v1/assuranceservice/assurances/types"
     response = requests.get(url=url, headers=headers)
     if response.status_code is not 200 or response.json().get("data") is None:
         logger.warning(f"query assurance failed, response data is {response.json()}")
@@ -203,7 +204,7 @@ def _query_assurances(headers: dict = {}):
 
 
 def _query_food(place_pair: tuple = ("Shang Hai", "Su Zhou"), train_num: str = "D1345", headers: dict = {}):
-    url = f"{base_address}/api/v1/foodservice/foods/2021-07-14/{place_pair[0]}/{place_pair[1]}/{train_num}"
+    url = f"{base_address}:18856/api/v1/foodservice/foods/2021-07-14/{place_pair[0]}/{place_pair[1]}/{train_num}"
 
     response = requests.get(url=url, headers=headers)
     if response.status_code is not 200 or response.json().get("data") is None:
@@ -228,7 +229,7 @@ def _query_contacts(headers: dict = {}) -> List[str]:
     :return: id list
     """
     global uuid
-    url = f"{base_address}/api/v1/contactservice/contacts/account/{uuid}"
+    url = f"{base_address}:12347/api/v1/contactservice/contacts/account/{uuid}"
 
     response = requests.get(url=url, headers=headers)
     if response.status_code is not 200 or response.json().get("data") is None:
@@ -253,9 +254,9 @@ def _query_orders(headers: dict = {}, types: tuple = tuple([0]), query_other: bo
     url = ""
 
     if query_other:
-        url = f"{base_address}/api/v1/orderOtherService/orderOther/refresh"
+        url = f"{base_address}:12032/api/v1/orderOtherService/orderOther/refresh"
     else:
-        url = f"{base_address}/api/v1/orderservice/order/refresh"
+        url = f"{base_address}:12031/api/v1/orderservice/order/refresh"
 
     payload = {
         "loginId": uuid,
@@ -359,7 +360,7 @@ def _query_route(routeId: str = '92708982-77af-4318-be25-57ccb0ff69ad', headers:
 
 
 def _pay_one_order(order_id, trip_id, headers: dict = {}):
-    url = f"{base_address}/api/v1/inside_pay_service/inside_payment"
+    url = f"{base_address}:18673/api/v1/inside_pay_service/inside_payment"
     payload = {
         "orderId": order_id,
         "tripId": trip_id
@@ -378,7 +379,7 @@ def _pay_one_order(order_id, trip_id, headers: dict = {}):
 
 
 def _cancel_one_order(order_id, uuid, headers: dict = {}):
-    url = f"{base_address}/api/v1/cancelservice/cancel/{order_id}/{uuid}"
+    url = f"{base_address}:18885/api/v1/cancelservice/cancel/{order_id}/{uuid}"
 
     response = requests.get(url=url,
                             headers=headers)
@@ -392,7 +393,7 @@ def _cancel_one_order(order_id, uuid, headers: dict = {}):
 
 
 def _collect_one_order(order_id, headers: dict = {}):
-    url = f"{base_address}/api/v1/executeservice/execute/collected/{order_id}"
+    url = f"{base_address}:12386/api/v1/executeservice/execute/collected/{order_id}"
     response = requests.get(url=url,
                             headers=headers)
     if response.status_code == 200:
@@ -404,7 +405,7 @@ def _collect_one_order(order_id, headers: dict = {}):
 
 
 def _enter_station(order_id, headers: dict = {}):
-    url = f"{base_address}/api/v1/executeservice/execute/execute/{order_id}"
+    url = f"{base_address}:12386/api/v1/executeservice/execute/execute/{order_id}"
     response = requests.get(url=url,
                             headers=headers)
     if response.status_code == 200:
