@@ -8,6 +8,7 @@ from atomic_queries import _login, _query_orders, _query_high_speed_ticket
 
 from utils import random_boolean
 import time
+import sys
 
 from threading import Thread
 
@@ -19,18 +20,23 @@ def main():
         "Content-Type": "application/json"
     }
 
-    for i in range(30):
+
+    for i in range(100):
         now_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
         print(f"now_time:{now_time}")
 
-        if i % 20 == 0:
+        if i == 0:
             uid, token = _login()
             if uid is not None and token is not None:
                 headers['Authorization'] = "Bearer " + token
 
         print(f"idx:{i}")
-        query_and_preserve(headers)
 
+        start  = time.time()
+        query_and_preserve(headers)
+        end = time.time()
+        print(end - start, file=sys.stderr)
+        
         # 1/4 几率取消
         if random_boolean() and random_boolean():
             query_one_and_cancel(headers)
@@ -48,7 +54,7 @@ def main_thread():
     threads = []
 
     start_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
-    print(f"start:{start_time}")
+    # print(f"start:{start_time}")
 
     for i in range(5):
         t = Thread(name="thread" + str(i), target=main)
@@ -60,7 +66,7 @@ def main_thread():
         t.join()
 
     end_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
-    print(f"start:{start_time} end:{end_time}")
+    # print(f"start:{start_time} end:{end_time}")
 
 
 def query_order():

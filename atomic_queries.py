@@ -133,7 +133,7 @@ def _query_high_speed_ticket_parallel(place_pair: tuple = ("Shang Hai", "Su Zhou
     :return: TripId 列表
     """
 
-    url = f"{base_address}/api/v1/travelservice/trips/left_parallel"
+    url = f"{base_address}:12346/api/v1/travelservice/trips/left_parallel"
     place_pairs = [("Shang Hai", "Su Zhou"),
                    ("Su Zhou", "Shang Hai"),
                    ("Nan Jing", "Shang Hai")]
