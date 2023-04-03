@@ -21,32 +21,32 @@ def main():
     }
 
 
-    for i in range(100):
-        now_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
-        print(f"now_time:{now_time}")
+    for i in range(1):
+        #now_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+        #print(f"now_time:{now_time}")
 
         if i == 0:
             uid, token = _login()
             if uid is not None and token is not None:
                 headers['Authorization'] = "Bearer " + token
 
-        print(f"idx:{i}")
+        #print(f"idx:{i}")
 
-        start  = time.time()
+        #start  = time.time()
         query_and_preserve(headers)
-        end = time.time()
-        print(end - start, file=sys.stderr)
+        #end = time.time()
+        #print(end - start, file=sys.stderr)
         
         # 1/4 几率取消
-        if random_boolean() and random_boolean():
-            query_one_and_cancel(headers)
-        else:
-            pairs = _query_orders(headers=headers, types=tuple([0, 1]))
-            pairs2 = _query_orders(headers=headers, types=tuple([0, 1]), query_other=True)
-            pairs = pairs + pairs2
-            query_order_and_pay(headers, pairs)
-            query_and_collect_ticket(headers)
-            query_and_enter_station(headers)
+        #if random_boolean() and random_boolean():
+        #    query_one_and_cancel(headers)
+        #else:
+        #    pairs = _query_orders(headers=headers, types=tuple([0, 1]))
+        #    pairs2 = _query_orders(headers=headers, types=tuple([0, 1]), query_other=True)
+        #    pairs = pairs + pairs2
+        #    query_order_and_pay(headers, pairs)
+        #    query_and_collect_ticket(headers)
+        #    query_and_enter_station(headers)
 
 
 
@@ -56,9 +56,9 @@ def main_thread():
     start_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
     # print(f"start:{start_time}")
 
-    for i in range(5):
+    for i in range(1000):
         t = Thread(name="thread" + str(i), target=main)
-        time.sleep(1)
+        time.sleep(20/1000)
         t.start()
         threads.append(t)
 
