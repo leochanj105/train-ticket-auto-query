@@ -12,6 +12,9 @@ import sys
 
 from threading import Thread
 
+num_threads = 20
+num_reqs_per_thread = 1
+elapse = 20
 
 def main():
     headers = {
@@ -21,7 +24,7 @@ def main():
     }
 
 
-    for i in range(1):
+    for i in range(num_reqs_per_thread):
         #now_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
         #print(f"now_time:{now_time}")
 
@@ -56,9 +59,9 @@ def main_thread():
     start_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
     # print(f"start:{start_time}")
 
-    for i in range(1000):
+    for i in range(num_threads):
         t = Thread(name="thread" + str(i), target=main)
-        time.sleep(20/1000)
+        time.sleep(elapse/1000)
         t.start()
         threads.append(t)
 
