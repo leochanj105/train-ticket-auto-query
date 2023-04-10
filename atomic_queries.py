@@ -5,7 +5,7 @@ import time
 
 logger = logging.getLogger("atomic_queries")
 # base_address = "http://139.196.152.44:31000"
-base_address = "http://127.0.0.1"
+base_address = "http://amd219.utah.cloudlab.us"
 
 headers = {
     "Cookie": "JSESSIONID=CAF07ABCB2031807D1C6043730C69F17; YsbCaptcha=ABF26F4AE563405894B1540057F62E7B",

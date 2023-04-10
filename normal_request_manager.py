@@ -14,7 +14,7 @@ from threading import Thread
 
 num_threads = 20
 num_reqs_per_thread = 1
-elapse = 20
+elapse = 2
 
 def main():
     headers = {

@@ -12,7 +12,7 @@ uuid = "4d2a46c7-71cb-4cf1-b5bb-b68406d9da6f"
 date = time.strftime("%Y-%m-%d", time.localtime(time.time() + 24*3600))
 
 # base_address = "http://139.196.152.44:31000"
-base_address = "http://127.0.0.1"
+base_address = "http://amd219.utah.cloudlab.us"
 
 
 def query_and_preserve(headers):
@@ -28,23 +28,24 @@ def query_and_preserve(headers):
     trip_ids = []
     PRESERVE_URL = ""
 
-    high_speed = random_boolean()
+    #high_speed = random_boolean()
+    high_speed = True
     if high_speed:
         start = "Shang Hai"
         end = "Su Zhou"
         high_speed_place_pair = (start, end)
-        trip_ids = _query_high_speed_ticket(place_pair=high_speed_place_pair, headers=headers, time=date)
+        #trip_ids = _query_high_speed_ticket(place_pair=high_speed_place_pair, headers=headers, time=date)
         PRESERVE_URL = f"{base_address}:14568/api/v1/preserveservice/preserve"
     else:
         start = "Shang Hai"
         end = "Nan Jing"
         other_place_pair = (start, end)
-        trip_ids = _query_normal_ticket(place_pair=other_place_pair, headers=headers, time=date)
+        #trip_ids = _query_normal_ticket(place_pair=other_place_pair, headers=headers, time=date)
         PRESERVE_URL = f"{base_address}:14569/api/v1/preserveotherservice/preserveOther"
 
-    _ = _query_assurances(headers=headers)
-    food_result = _query_food(headers=headers)
-    contacts_result = _query_contacts(headers=headers)
+    #_ = _query_assurances(headers=headers)
+    #food_result = _query_food(headers=headers)
+    #contacts_result = _query_contacts(headers=headers)
 
     base_preserve_payload = {
         "accountId": uuid,
@@ -56,10 +57,12 @@ def query_and_preserve(headers):
         "tripId": ""
     }
 
-    trip_id = random_from_list(trip_ids)
+    #trip_id = random_from_list(trip_ids)
+    trip_id = "D1345"
     base_preserve_payload["tripId"] = trip_id
 
-    need_food = random_boolean()
+    #need_food = random_boolean()
+    need_food = False
     if need_food:
         logger.info("need food")
         food_dict = random_from_list(food_result)
@@ -68,18 +71,22 @@ def query_and_preserve(headers):
         logger.info("not need food")
         base_preserve_payload["foodType"] = "0"
 
-    need_assurance = random_boolean()
+    #need_assurance = random_boolean()
+    need_assurance = False
     if need_assurance:
         base_preserve_payload["assurance"] = 1
 
-    contacts_id = random_from_list(contacts_result)
+    #contacts_id = random_from_list(contacts_result)
+    contacts_id = "5802ba2c-4309-47e9-9541-62a835e2eec9"
     base_preserve_payload["contactsId"] = contacts_id
 
     # 高铁 2-3
-    seat_type = random_from_list(["2", "3"])
+    #seat_type = random_from_list(["2", "3"])
+    seat_type = "2"
     base_preserve_payload["seatType"] = seat_type
 
-    need_consign = random_boolean()
+    #need_consign = random_boolean()
+    need_consign = False
     if need_consign:
         consign = {
             "consigneeName": random_str(),
