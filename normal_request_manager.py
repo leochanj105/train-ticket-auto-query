@@ -12,7 +12,7 @@ import sys
 
 from threading import Thread
 
-num_threads = 10
+num_threads = 20
 num_reqs_per_thread = 1
 elapse = 2
 
@@ -123,5 +123,6 @@ def query_tickets():
 
 if __name__ == '__main__':
     num_threads = int(sys.argv[1])
+    num_reqs_per_thread = int(sys.argv[2])
     main_thread()
 
