@@ -12,7 +12,7 @@ uuid = "4d2a46c7-71cb-4cf1-b5bb-b68406d9da6f"
 date = time.strftime("%Y-%m-%d", time.localtime(time.time() + 24*3600))
 
 # base_address = "http://139.196.152.44:31000"
-base_address = "http://amd219.utah.cloudlab.us"
+base_address = "http://amd179.utah.cloudlab.us"
 
 
 def query_and_preserve(headers):
@@ -45,7 +45,8 @@ def query_and_preserve(headers):
 
     #_ = _query_assurances(headers=headers)
     #food_result = _query_food(headers=headers)
-    #contacts_result = _query_contacts(headers=headers)
+    contacts_result = _query_contacts(headers=headers)
+    #print(contacts_result)
 
     base_preserve_payload = {
         "accountId": uuid,
@@ -77,7 +78,8 @@ def query_and_preserve(headers):
         base_preserve_payload["assurance"] = 1
 
     #contacts_id = random_from_list(contacts_result)
-    contacts_id = "5802ba2c-4309-47e9-9541-62a835e2eec9"
+    #contacts_id = "7b3e68d6-67f5-4c92-8cfe-841cefb37804"
+    contacts_id = contacts_result[0]
     base_preserve_payload["contactsId"] = contacts_id
 
     # 高铁 2-3

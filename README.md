@@ -9,5 +9,11 @@ to modify the base_address in those files also. Some ports also need to be chang
 to the exact port of the target service.
 
 ## How to use
-
-python3 normal_request_manager.py 2> {YOUR_FILE}
+First, change the service address
+```bash
+sed -i "s/amd179.utah.cloudlab.us/{YOUR_ADDRESS}/g" *.py
+``` 
+then 
+```bash
+python3 normal_request_manager.py {NUM_THREADS} {NUM_REQS_PER_THREAD} 2> {YOUR_FILE}
+```
